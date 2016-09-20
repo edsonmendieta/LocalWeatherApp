@@ -27,30 +27,32 @@ function ipGeo() {
     xhr.send();
 }
 
-    function openWeather() {
+function openWeather() {
 
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?q=' + cityName + ',' + countryCode + '&units=imperial&appid=659c3dd6c7263dc3cd1bc77834892385');
-        xhr.onreadystatechange  = function() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?q=' +cityName + ',' + countryCode +'&units=metric&appid=659c3dd6c7263dc3cd1bc77834892385');
+    xhr.onreadystatechange  = function() {
 
-            if(this.readyState == 4 && this.status == 200) {
+    if(this.readyState == 4 && this.status == 200) {
 
-                console.log(JSON.parse(this.response));
+        console.log(JSON.parse(this.response));
 
-                var parsedWeather = JSON.parse(this.response);
+        var parsedWeather = JSON.parse(this.response);
 
-                // creates & appends string for #temperatureP
-                var temperatureText = document.createTextNode(parsedWeather.main.temp + ' \xB0F');
+        // creates & appends string for #temperatureP
+        var temperatureText=document.createTextNode(parsedWeather.main.temp + ' \xB0');
 
-                document.getElementById('temperatureP').appendChild(temperatureText);
+                   //Inserts temperature numbers BEFORE symbol & letter
+        document.getElementById('temperatureP').insertBefore(temperatureText, document.getElementById('temperatureP').childNodes[0]);
 
-                // creates & appends string for #statusP
-                var statusText = document.createTextNode(parsedWeather.weather[0].main);
 
-                document.getElementById('statusP').appendChild(statusText);
+        // creates & appends string for #statusP
+        var statusText=document.createTextNode(parsedWeather.weather[0].main);
+
+        document.getElementById('statusP').appendChild(statusText);
 
 
             }
         }
-        xhr.send();
+    xhr.send();
     };
