@@ -44,7 +44,10 @@ function ipGeo() {
 
                 document.getElementById('temperatureP').appendChild(temperatureText);
 
-                
+                // creates & appends string for #statusP
+                var statusText = document.createTextNode(parsedWeather.weather[0].main);
+
+                document.getElementById('statusP').appendChild(statusText);
 
 
             }
