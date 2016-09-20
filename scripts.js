@@ -10,22 +10,16 @@ function ipGeo() {
     xhr.open('GET', 'http://ip-api.com/json');
     xhr.onreadystatechange = function() {
 
-        var weatherParameters;
-
         if(this.readyState == 4 && this.status == 200) {
             console.log(JSON.parse(this.response));
 
             // creates & appends string for #locationP
             var locationText = document.createTextNode(JSON.parse(this.response).city + ',' + ' ' + JSON.parse(this.response).region);
+
             document.getElementById('locationP').appendChild(locationText);
 
             cityName = JSON.parse(this.response).city;
             countryCode = JSON.parse(this.response).countryCode;
-
-            weatherParameters = 'hello!';
-            console.log(weatherParameters);
-            console.log(cityName);
-            console.log(countryCode);
 
             openWeather(); // executes openWeather function last.
         }
@@ -36,14 +30,23 @@ function ipGeo() {
     function openWeather() {
 
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?q=' + cityName + ',' + countryCode + '&appid=659c3dd6c7263dc3cd1bc77834892385');
+        xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?q=' + cityName + ',' + countryCode + '&units=imperial&appid=659c3dd6c7263dc3cd1bc77834892385');
         xhr.onreadystatechange  = function() {
 
             if(this.readyState == 4 && this.status == 200) {
 
                 console.log(JSON.parse(this.response));
 
+                var parsedWeather = JSON.parse(this.response);
+
+                // creates & appends string for #temperatureP
+                var temperatureText = document.createTextNode(parsedWeather.main.temp + ' \xB0F');
+
+                document.getElementById('temperatureP').appendChild(temperatureText);
+
                 
+
+
             }
         }
         xhr.send();
