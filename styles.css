@@ -1,0 +1,42 @@
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+}
+
+#appHeader1 {
+    text-align: center;
+    font-weight: normal;
+    font-size: 400%;
+}
+
+#appHeader2 {
+    text-align: center;
+    font-weight: normal;
+    font-size: 400%;
+}
+
+#weatherInfo {
+    text-align: center;
+    font-weight: normal;
+}
+
+#Layer_1 {
+    margin: 0 auto;
+}
+
+#weatherPic { /* an svg */
+    display: flex;
+    justify-content: center;
+}
+
+#attribution {
+    text-align: center;
+    font-weight: normal;
+    font-size: 50%;
+    margin-top: 50px;
+}
