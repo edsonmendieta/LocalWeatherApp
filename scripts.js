@@ -1,11 +1,16 @@
+
 // when window loads, sends GET request to IP Geo API
 window.addEventListener('load', ipGeo, false);
 
-var cityName;
-var countryCode;
+var cityName; // user's city
+var countryCode; // user's country
 
-var tempNum;
+var tempNum; // contains numerical temperature
 
+var mainForecast; // contains the 'main' weather description...
+// (i.e. cloudy, rainy, snowing, clear etc.)
+
+// IP GEOlocator API request & functionality -------------------
 function ipGeo() {
 
     var xhr = new XMLHttpRequest();
@@ -23,12 +28,15 @@ function ipGeo() {
             cityName = JSON.parse(this.response).city;
             countryCode = JSON.parse(this.response).countryCode;
 
-            openWeather(); // executes openWeather function last.
+
+            openWeather(); // executes openWeather global function
         }
     }
     xhr.send();
 }
+//-------------------------------------------
 
+// OpenWeather API request & functionality ------------------
 function openWeather() {
 
     var xhr = new XMLHttpRequest();
@@ -41,8 +49,10 @@ function openWeather() {
 
             var parsedWeather = JSON.parse(this.response);
 
+            var roundedTemp = Math.round(parsedWeather.main.temp);
+
             // creates & appends string for #temperatureP
-            var temperatureText=document.createTextNode(parsedWeather.main.temp + ' \xB0');
+            var temperatureText=document.createTextNode(roundedTemp + ' \xB0');
 
                    //Inserts temperature numbers BEFORE symbol & letter
                    document.getElementById('temperatureP').insertBefore(temperatureText, document.getElementById('temperatureP').childNodes[0]);
@@ -53,13 +63,58 @@ function openWeather() {
 
             document.getElementById('statusP').appendChild(statusText);
 
-            tempNum = parsedWeather.main.temp;;
+            tempNum = parsedWeather.main.temp;
+
+            mainForecast = parsedWeather.weather[0].main.toLowerCase();
+
+
+            weatherPic(); // executes weatherPic global function
 
         }
     }
     xhr.send();
-};
+}
+//---------------------------------------------------
 
+function weatherPic() { // adds appropriate pic to #iconPic
+
+    var weatherImg = document.getElementById('iconPic');
+
+    // regexp patterns assigned to variables
+    var clearRe = /clear/;
+    var cloudRe = /cloud/;
+    var rainRe = /rain/;
+    var snowRe = /snow/;
+
+    var checkMatch = clearRe.exec(mainForecast);
+
+    if(clearRe.exec(mainForecast)) { // if 'clear' is in word...
+
+            weatherImg.setAttribute('src', 'https://c1.staticflickr.com/9/8433/29508504720_bf8015fafa_m.jpg');
+            weatherImg.setAttribute('alt', 'sunIcon');
+    }
+
+    else if(cloudRe.exec(mainForecast)) { // if 'cloud' is in word...
+
+        weatherImg.setAttribute('src', 'https://c8.staticflickr.com/9/8294/29800837055_922aa68f42_m.jpg');
+        weatherImg.setAttribute('alt', 'cloudIcon');
+    }
+
+    else if(rainRe.exec(mainForecast)) { // if 'rain' is in word...
+
+        weatherImg.setAttribute('src', 'https://c4.staticflickr.com/9/8458/29800854715_86ab837b7e_m.jpg');
+        weatherImg.setAttribute('alt', 'rainIcon');
+    }
+
+    else if(snowRe.exec(mainForecast)) { // if 'snow' is in word...
+
+        weatherImg.setAttribute('src', 'https://c3.staticflickr.com/8/7484/29508505010_45c2a0b64e_m.jpg');
+        weatherImg.setAttribute('alt', 'snowIcon');
+    }
+}
+//------------------------------------------------
+
+// temp. unit system conversion --------------------------
 document.getElementById('unitLetter').addEventListener('click', convert, false);
 
 function convert() {
@@ -80,7 +135,7 @@ function convert() {
         spanLetter.appendChild(imperial);
 
         // converts temp. to Farenheit...assigns to variable 'tempNum'
-        tempNum = (tempNum * 1.8) + 32;
+        tempNum = Math.round((tempNum * 1.8) + 32);
 
         // creates new temp. text
         var newTempText = document.createTextNode(tempNum  + ' \xB0')
@@ -100,7 +155,7 @@ function convert() {
         spanLetter.appendChild(metric);
 
         // converts temp. to Celsius...assigns to variable 'tempNum'
-        tempNum = (tempNum - 32) * (5/9);
+        tempNum = Math.round((tempNum - 32) * (5/9));
 
         // creates new temp. text
         var newTempText = document.createTextNode(tempNum  + ' \xB0')
@@ -112,3 +167,4 @@ function convert() {
          temperatureNumbers.insertBefore(newTempText, temperatureNumbers.childNodes[0]);
     }
 }
+//--------------------------------------------------
