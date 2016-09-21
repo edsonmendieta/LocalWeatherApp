@@ -34,6 +34,11 @@ body {
     justify-content: center;
 }
 
+#unitLetter {
+    color: green;
+    cursor: pointer;
+}
+
 #attribution {
     text-align: center;
     font-weight: normal;
