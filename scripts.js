@@ -39,8 +39,10 @@ function ipGeo() {
 // OpenWeather API request & functionality ------------------
 function openWeather() {
 
+    console.log(cityName);
+
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?q=' +cityName + ',' + countryCode +'&units=metric&appid=659c3dd6c7263dc3cd1bc77834892385');
+    xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?q=' + cityName + ',' + countryCode +'&units=metric&appid=659c3dd6c7263dc3cd1bc77834892385');
     xhr.onreadystatechange  = function() {
 
         if(this.readyState == 4 && this.status == 200) {
@@ -90,26 +92,38 @@ function weatherPic() { // adds appropriate pic to #iconPic
 
     if(clearRe.exec(mainForecast)) { // if 'clear' is in word...
 
-            weatherImg.setAttribute('src', 'https://c1.staticflickr.com/9/8433/29508504720_bf8015fafa_m.jpg');
+            weatherImg.setAttribute('src', 'https://c7.staticflickr.com/9/8134/29201088814_477d0e1366_m.jpg');
             weatherImg.setAttribute('alt', 'sunIcon');
+
+            // sets background color as a result of icon
+            //document.body.style.backgroundColor = "#F9E66E";
     }
 
     else if(cloudRe.exec(mainForecast)) { // if 'cloud' is in word...
 
-        weatherImg.setAttribute('src', 'https://c8.staticflickr.com/9/8294/29800837055_922aa68f42_m.jpg');
+        weatherImg.setAttribute('src', 'https://c6.staticflickr.com/9/8361/29745612181_f991def85b_m.jpg');
         weatherImg.setAttribute('alt', 'cloudIcon');
+
+        // sets background color as a result of icon
+        //document.body.style.backgroundColor = "#C9D6D8";
     }
 
     else if(rainRe.exec(mainForecast)) { // if 'rain' is in word...
 
-        weatherImg.setAttribute('src', 'https://c4.staticflickr.com/9/8458/29800854715_86ab837b7e_m.jpg');
+        weatherImg.setAttribute('src', 'https://c5.staticflickr.com/9/8210/29201089644_06998fe01a_m.jpg');
         weatherImg.setAttribute('alt', 'rainIcon');
+
+        // sets background color as a result of icon
+        //document.body.style.backgroundColor = "#6C9FFA";
     }
 
     else if(snowRe.exec(mainForecast)) { // if 'snow' is in word...
 
-        weatherImg.setAttribute('src', 'https://c3.staticflickr.com/8/7484/29508505010_45c2a0b64e_m.jpg');
+        weatherImg.setAttribute('src', 'https://c1.staticflickr.com/9/8377/29715381672_2f55544bac_m.jpg');
         weatherImg.setAttribute('alt', 'snowIcon');
+
+        // sets background color as a result of icon
+        document.body.style.backgroundColor = "#99E0F7";
     }
 }
 //------------------------------------------------
