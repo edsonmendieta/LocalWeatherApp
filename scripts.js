@@ -42,7 +42,7 @@ function openWeather() {
     console.log(cityName);
 
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?q=' + cityName + ',' + countryCode +'&units=metric&appid=c42d6058e4da74941ba923c11310ad07');
+    xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?q=' + cityName + ',' + countryCode +'&units=metric&appid=');
               // *add openWeatherMap API key when app is being reviewed*
   // 
   //
